@@ -11,8 +11,10 @@ public enum DatabaseCommands {
                 return () -> DatabaseCommandResult.error("Not right count of args, should be 1");
             }
 
-            environment.addDatabase(null);
-            return () -> DatabaseCommandResult.success("");
+            return () -> {
+                environment.addDatabase(null);
+                return DatabaseCommandResult.success("");
+            };
         }
     }, CREATE_TABLE {
         @Override

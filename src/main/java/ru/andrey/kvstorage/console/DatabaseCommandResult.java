@@ -7,17 +7,17 @@ public interface DatabaseCommandResult {
     class DatabaseCommandResultImpl implements DatabaseCommandResult {
 
         private final DatabaseCommandStatus commandStatus;
-        private final String message;
+        private final String value;
 
-        public DatabaseCommandResultImpl(DatabaseCommandStatus commandStatus, String message) {
+        public DatabaseCommandResultImpl(DatabaseCommandStatus commandStatus, String value) {
             this.commandStatus = commandStatus;
-            this.message = message;
+            this.value = value;
         }
 
         @Override
         public Optional<String> getResult() {
             if (isSuccess()) {
-                return Optional.of(message);
+                return Optional.of(value);
             } else {
                 return Optional.empty();
             }
@@ -38,17 +38,17 @@ public interface DatabaseCommandResult {
             if (isSuccess()) {
                 return null;
             } else {
-                return message;
+                return value;
             }
         }
     }
 
-    static DatabaseCommandResult success(String message) {
-        return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, message);
+    static DatabaseCommandResult success(String result) {
+        return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, result);
     }
 
-    static DatabaseCommandResultImpl error(String message) {
-        return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, message);
+    static DatabaseCommandResultImpl error(String errorMessage) {
+        return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, errorMessage);
     }
 
     Optional<String> getResult();

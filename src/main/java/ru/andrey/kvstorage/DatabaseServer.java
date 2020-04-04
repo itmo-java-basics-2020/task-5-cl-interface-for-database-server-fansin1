@@ -27,9 +27,10 @@ public class DatabaseServer {
         DatabaseCommands databaseCommands;
         try {
             databaseCommands = DatabaseCommands.valueOf(terms[0]);
-        }  catch (IllegalArgumentException e) {
+        } catch (IllegalArgumentException e) {
             return DatabaseCommandResult.error("No such command");
         }
+
         return databaseCommands
                 .getCommand(env, Arrays.copyOfRange(terms, 1, terms.length))
                 .execute();
