@@ -8,8 +8,12 @@ public interface DatabaseCommandResult {
         return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, result);
     }
 
-    static DatabaseCommandResultImpl error(String errorMessage) {
+    static DatabaseCommandResult error(String errorMessage) {
         return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, errorMessage);
+    }
+
+    static DatabaseCommandResult unexpectedError() {
+        return DatabaseCommandResultImpl.UNEXPECTED_ERROR;
     }
 
     Optional<String> getResult();
@@ -26,6 +30,9 @@ public interface DatabaseCommandResult {
 
     class DatabaseCommandResultImpl implements DatabaseCommandResult {
 
+        private static final DatabaseCommandResult UNEXPECTED_ERROR =
+                new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, "Unexpected error");
+
         private final DatabaseCommandStatus commandStatus;
         private final String value;
 
@@ -36,11 +43,11 @@ public interface DatabaseCommandResult {
 
         @Override
         public Optional<String> getResult() {
-            if (isSuccess()) {
-                return Optional.of(value);
-            } else {
+            if (!isSuccess()) {
                 return Optional.empty();
             }
+
+            return Optional.of(value);
         }
 
         @Override
@@ -57,9 +64,9 @@ public interface DatabaseCommandResult {
         public String getErrorMessage() {
             if (isSuccess()) {
                 return null;
-            } else {
-                return value;
             }
+
+            return value;
         }
     }
 }
