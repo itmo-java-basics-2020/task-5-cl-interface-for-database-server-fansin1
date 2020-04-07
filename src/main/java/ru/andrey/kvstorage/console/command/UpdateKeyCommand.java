@@ -7,12 +7,12 @@ import ru.andrey.kvstorage.console.ExecutionEnvironment;
 import ru.andrey.kvstorage.exception.DatabaseException;
 import ru.andrey.kvstorage.logic.Database;
 
-public class UpdateKetCommand implements DatabaseCommand {
+public class UpdateKeyCommand implements DatabaseCommand {
 
     private final ExecutionEnvironment environment;
     private final CommandArgs args;
 
-    public UpdateKetCommand(ExecutionEnvironment environment, CommandArgs args) {
+    public UpdateKeyCommand(ExecutionEnvironment environment, CommandArgs args) {
         this.environment = environment;
         this.args = args;
     }

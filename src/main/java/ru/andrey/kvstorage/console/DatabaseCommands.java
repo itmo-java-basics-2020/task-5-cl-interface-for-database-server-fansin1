@@ -3,7 +3,7 @@ package ru.andrey.kvstorage.console;
 import ru.andrey.kvstorage.console.command.CreateDatabaseCommand;
 import ru.andrey.kvstorage.console.command.CreateTableCommand;
 import ru.andrey.kvstorage.console.command.ReadKeyCommand;
-import ru.andrey.kvstorage.console.command.UpdateKetCommand;
+import ru.andrey.kvstorage.console.command.UpdateKeyCommand;
 
 public enum DatabaseCommands {
     CREATE_DATABASE {
@@ -19,7 +19,7 @@ public enum DatabaseCommands {
     }, UPDATE_KEY {
         @Override
         public DatabaseCommand getCommand(ExecutionEnvironment environment, CommandArgs args) {
-            return new UpdateKetCommand(environment, args);
+            return new UpdateKeyCommand(environment, args);
         }
     }, READ_KEY {
         @Override
