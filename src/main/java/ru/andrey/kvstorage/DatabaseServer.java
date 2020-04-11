@@ -1,6 +1,7 @@
 package ru.andrey.kvstorage;
 
 import ru.andrey.kvstorage.console.*;
+import ru.andrey.kvstorage.exception.DatabaseException;
 
 import java.util.Arrays;
 
@@ -17,9 +18,11 @@ public class DatabaseServer {
             return DatabaseCommandResult.error("Wrong command");
         }
 
-        DatabaseCommand command = parseCommand(commandText);
-        if (command == null) {
-            return DatabaseCommandResult.error("No such command");
+        DatabaseCommand command;
+        try {
+            command = parseCommand(commandText);
+        } catch (Exception e) {
+            return DatabaseCommandResult.error(e.getMessage());
         }
 
         return tryExecute(command);
@@ -33,19 +36,19 @@ public class DatabaseServer {
         }
     }
 
-    private DatabaseCommand parseCommand(String commandText) {
+    private DatabaseCommand parseCommand(String commandText) throws DatabaseException {
         String[] terms = commandText.split(" ");
         CommandArgs args = new CommandArgs(Arrays.copyOfRange(terms, 1, terms.length));
 
         return getCommand(terms[0], args);
     }
 
-    private DatabaseCommand getCommand(String name, CommandArgs args) {
+    private DatabaseCommand getCommand(String name, CommandArgs args) throws DatabaseException {
         DatabaseCommands databaseCommands;
         try {
             databaseCommands = DatabaseCommands.valueOf(name);
         } catch (IllegalArgumentException e) {
-            return null;
+            throw new DatabaseException("Wrong command name");
         }
 
         return databaseCommands.getCommand(env, args);
