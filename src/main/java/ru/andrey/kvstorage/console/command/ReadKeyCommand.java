@@ -23,7 +23,7 @@ public class ReadKeyCommand implements DatabaseCommand {
     }
 
     @Override
-    public DatabaseCommandResult execute() throws DatabaseException {
+    public DatabaseCommandResult execute() {
         return environment
                 .getDatabase(args.getDatabaseName())
                 .map(this::tryReadKey)

@@ -1,7 +1,5 @@
 package ru.andrey.kvstorage.console;
 
-import ru.andrey.kvstorage.exception.DatabaseException;
-
 public class CommandArgs {
 
     private static final int DATABASE_NAME_INDEX = 0;
@@ -15,31 +13,23 @@ public class CommandArgs {
         this.args = args;
     }
 
-    public String getDatabaseName() throws DatabaseException {
-        return getArg(DATABASE_NAME_INDEX);
+    public String getDatabaseName() {
+        return args[DATABASE_NAME_INDEX];
     }
 
-    public String getTableName() throws DatabaseException {
-        return getArg(TABLE_NAME_INDEX);
+    public String getTableName() {
+        return args[TABLE_NAME_INDEX];
     }
 
-    public String getKey() throws DatabaseException {
-        return getArg(KEY_INDEX);
+    public String getKey() {
+        return args[KEY_INDEX];
     }
 
-    public String getValue() throws DatabaseException {
-        return getArg(VALUE_INDEX);
+    public String getValue() {
+        return args[VALUE_INDEX];
     }
 
     public int length() {
         return args.length;
-    }
-
-    private String getArg(int index) throws DatabaseException {
-        if (index >= args.length) {
-            throw new DatabaseException("No such arg");
-        }
-
-        return args[index];
     }
 }

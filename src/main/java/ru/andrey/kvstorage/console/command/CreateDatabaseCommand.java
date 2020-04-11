@@ -22,7 +22,7 @@ public class CreateDatabaseCommand implements DatabaseCommand {
     }
 
     @Override
-    public DatabaseCommandResult execute() throws DatabaseException {
+    public DatabaseCommandResult execute() {
         args.getDatabaseName(); // to check args
         environment.addDatabase(null);
         return DatabaseCommandResult.success("");
