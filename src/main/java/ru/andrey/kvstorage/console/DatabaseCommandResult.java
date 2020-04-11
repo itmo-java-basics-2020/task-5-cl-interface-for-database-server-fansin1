@@ -5,11 +5,11 @@ import java.util.Optional;
 public interface DatabaseCommandResult {
 
     static DatabaseCommandResult success(String result) {
-        return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, result);
+        return new DatabaseCommandResultImpl(DatabaseCommandStatus.SUCCESS, result, "");
     }
 
     static DatabaseCommandResult error(String errorMessage) {
-        return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, errorMessage);
+        return new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, "", errorMessage);
     }
 
     static DatabaseCommandResult unexpectedError() {
@@ -31,22 +31,23 @@ public interface DatabaseCommandResult {
     class DatabaseCommandResultImpl implements DatabaseCommandResult {
 
         private static final DatabaseCommandResult UNEXPECTED_ERROR =
-                new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, "Unexpected error");
+                new DatabaseCommandResultImpl(DatabaseCommandStatus.FAILED, "", "Unexpected error");
 
         private final DatabaseCommandStatus commandStatus;
         private final String value;
+        private final String errorMessage;
 
-        private DatabaseCommandResultImpl(DatabaseCommandStatus commandStatus, String value) {
+        private DatabaseCommandResultImpl(
+                DatabaseCommandStatus commandStatus,
+                String value,
+                String errorMessage) {
             this.commandStatus = commandStatus;
             this.value = value;
+            this.errorMessage = errorMessage;
         }
 
         @Override
         public Optional<String> getResult() {
-            if (!isSuccess()) {
-                return Optional.empty();
-            }
-
             return Optional.of(value);
         }
 
@@ -62,11 +63,7 @@ public interface DatabaseCommandResult {
 
         @Override
         public String getErrorMessage() {
-            if (isSuccess()) {
-                return null;
-            }
-
-            return value;
+            return errorMessage;
         }
     }
 }

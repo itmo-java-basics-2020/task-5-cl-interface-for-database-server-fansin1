@@ -4,6 +4,7 @@ import ru.andrey.kvstorage.console.CommandArgs;
 import ru.andrey.kvstorage.console.DatabaseCommand;
 import ru.andrey.kvstorage.console.DatabaseCommandResult;
 import ru.andrey.kvstorage.console.ExecutionEnvironment;
+import ru.andrey.kvstorage.exception.DatabaseException;
 
 public class CreateDatabaseCommand implements DatabaseCommand {
 
@@ -16,7 +17,7 @@ public class CreateDatabaseCommand implements DatabaseCommand {
     }
 
     @Override
-    public DatabaseCommandResult execute() {
+    public DatabaseCommandResult execute() throws DatabaseException {
         args.getDatabaseName(); // to check args
         environment.addDatabase(null);
         return DatabaseCommandResult.success("");

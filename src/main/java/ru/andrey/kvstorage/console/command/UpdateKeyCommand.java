@@ -18,7 +18,7 @@ public class UpdateKeyCommand implements DatabaseCommand {
     }
 
     @Override
-    public DatabaseCommandResult execute() {
+    public DatabaseCommandResult execute() throws DatabaseException {
         return environment
                 .getDatabase(args.getDatabaseName())
                 .map(this::tryUpdateKey)
