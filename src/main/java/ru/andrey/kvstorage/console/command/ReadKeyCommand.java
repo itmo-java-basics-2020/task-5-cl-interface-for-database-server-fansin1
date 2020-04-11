@@ -9,10 +9,15 @@ import ru.andrey.kvstorage.logic.Database;
 
 public class ReadKeyCommand implements DatabaseCommand {
 
+    private static final int ARGS_COUNT = 3;
+
     private final ExecutionEnvironment environment;
     private final CommandArgs args;
 
-    public ReadKeyCommand(ExecutionEnvironment environment, CommandArgs args) {
+    public ReadKeyCommand(ExecutionEnvironment environment, CommandArgs args) throws DatabaseException {
+        if (args.length() != ARGS_COUNT) {
+            throw new DatabaseException("Wrong args count");
+        }
         this.environment = environment;
         this.args = args;
     }

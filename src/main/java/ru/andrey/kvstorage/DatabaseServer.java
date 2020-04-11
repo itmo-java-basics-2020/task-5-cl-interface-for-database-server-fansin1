@@ -1,7 +1,6 @@
 package ru.andrey.kvstorage;
 
 import ru.andrey.kvstorage.console.*;
-import ru.andrey.kvstorage.exception.DatabaseException;
 
 import java.util.Arrays;
 
@@ -29,7 +28,7 @@ public class DatabaseServer {
     private DatabaseCommandResult tryExecute(DatabaseCommand command) {
         try {
             return command.execute();
-        } catch (DatabaseException e) {
+        } catch (Exception e) {
             return DatabaseCommandResult.error(e.getMessage());
         }
     }

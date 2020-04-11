@@ -31,6 +31,10 @@ public class CommandArgs {
         return getArg(VALUE_INDEX);
     }
 
+    public int length() {
+        return args.length;
+    }
+
     private String getArg(int index) throws DatabaseException {
         if (index >= args.length) {
             throw new DatabaseException("No such arg");
